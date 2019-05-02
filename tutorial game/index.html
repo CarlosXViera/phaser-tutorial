@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
+  </head>
+  <body>
+  <script type="text/javascript">
+  var config = {
+      type: Phaser.AUTO,
+      width: 800,
+      height: 600,
+      physics: {
+          default: 'arcade',
+          arcade: {
+              gravity: { y: 300 },
+              debug: false
+          }
+      },
+      scene: {
+          preload: preload,
+          create: create,
+          update: update
+      }
+  };
+  var platforms;
+  var game = new Phaser.Game(config);
+
+
+  function preload ()
+  {
+    // load all your image/videos
+    this.load.image('player', 'assets/player.png');
+    this.load.image('ground', 'assets/platform.png')
+    this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
+
+  }
+
+  function create ()
+  {
+    // display images/graphics/videos
+    this.add.image(0, 0, 'player').setOrigin(0,0);
+
+    //  The platforms group contains the ground and the 2 ledges we can jump on
+    platforms = this.physics.add.staticGroup();
+
+    //  Here we create the ground.
+    //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
+    platforms.create(400, 600, 'ground').setScale(.5,.5).refreshBody();
+
+    //  Now let's create some ledges
+    platforms.create(0, 400, 'ground');
+    platforms.create(100, 250, 'ground');
+    // platforms.create(750, 220, 'ground');
+
+  }
+
+  function update ()
+  {
+    // interaction
+  }
+// python -m SimpleHTTPServer 3000
+
+  </script>
+  </body>
+</html>
